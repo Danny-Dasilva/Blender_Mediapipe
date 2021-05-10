@@ -132,21 +132,6 @@ class Modify_PT_Panel(bpy.types.Panel):
 
 
 
-class Install_PT_Panel(bpy.types.Panel):
-    bl_idname = "INSTALL_PT_Panel_ALPHA"
-    bl_label = "Install PyPacks ALPHA"
-    bl_category = "MOCAP_ALPHA"
-    bl_space_type = "VIEW_3D"
-    bl_region_type = "UI"
-
-    
-    def draw(self, context):
-        layout = self.layout
-
-        row = layout.row()
-        row.operator('install.mediapipe_package', text="Install python Mediapipe Package")
-        row = layout.row()
-        row.operator('install.joblib_package', text="Install Joblib (Vibe requirement)")
 
 class Debug_PT_Panel(bpy.types.Panel):
     bl_idname = "Debug_PT_Panel_ALPHA"
@@ -3540,54 +3525,6 @@ class Mediapipe_Pose_estimation(Operator, ImportHelper):
         return{'FINISHED'}
 
 
-class Install_Mediapipe(bpy.types.Operator):
-    bl_idname = "install.mediapipe_package"
-    bl_label = "Install python Mediapipe Package"
-    bl_description = "Install python Mediapipe Package"
-
-    def execute(self,context):
-
-        import subprocess
-        import sys
-        import os
-        
-        # path to python.exe
-        python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
-        python_pip = os.path.join(sys.prefix, 'lib', 'site-packages', 'pip')
-        
-
-        # upgrade pip
-        # subprocess.call([python_exe, "-m", "ensurepip"])
-        subprocess.call([python_exe, python_pip, "install", "--upgrade", "pip"])
-        
-        # install required packages
-        subprocess.call([python_exe, python_pip, "install", "mediapipe"])
-
-        return{'FINISHED'}
-
-
-class Install_Joblib(bpy.types.Operator):
-    bl_idname = "install.joblib_package"
-    bl_label = "Install python JobLib Package"
-    bl_description = "Install python JobLib Package"
-
-    def execute(self,context):
-
-        import subprocess
-        import sys
-        import os
-        
-        # path to python.exe
-        python_exe = os.path.join(sys.prefix, 'bin', 'python.exe')
-        
-        # upgrade pip
-        subprocess.call([python_exe, "-m", "ensurepip"])
-        subprocess.call([python_exe, "-m", "pip", "install", "--upgrade", "pip"])
-        
-        # install required packages
-        subprocess.call([python_exe, "-m", "pip", "install", "joblib"])
-
-        return{'FINISHED'}
 
 class Convert_axis(Operator):
     bl_idname = "mocap.convert_axis"
@@ -4406,7 +4343,7 @@ class Mediapipe_Pose_estimation_RT(Operator):
 
        
         self._s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self._s.connect((socket.gethostname(), 1234)) #gethostname is the local address,
+        self._s.connect((socket.gethostname(), 1235)) #gethostname is the local address,
 
         name_points = 'Point'
         
@@ -4472,7 +4409,7 @@ class Reload_sk_Mediapipe(Operator):
 
         return{'FINISHED'}
 classes = (Import_Data_easymocap, Test_PT_Panel, OT_TestOpenFilebrowser,Import_Data_frankmocap,Import_Data_vibe,Mediapipe_Pose_estimation,
-            Install_Mediapipe,Install_Joblib,MySettings,Modify_PT_Panel,Install_PT_Panel,Convert_axis,Reset_location,Reset_rotation,Foot_high,Compensate_Rotation,Smooth_Bone,Mediapipe_Pose_estimation_RT,Mediapipe_Pose_Prepare_Skeleton_RT, 
+            MySettings,Modify_PT_Panel,Convert_axis,Reset_location,Reset_rotation,Foot_high,Compensate_Rotation,Smooth_Bone,Mediapipe_Pose_estimation_RT,Mediapipe_Pose_Prepare_Skeleton_RT, 
             Reload_sk_Mediapipe, Debug_PT_Panel)
 
 # register, unregister = bpy.utils.register_classes_factory(classes)

@@ -1,0 +1,1 @@
+https://blender.stackexchange.com/questions/28673/update-viewport-while-running-script
